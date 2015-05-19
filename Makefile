@@ -1,4 +1,4 @@
-NAME = emanueleperuffo/openvpn-server
+NAME = emanueleperuffo/postgres
 VERSION = 1
 
 .PHONY: all build test release

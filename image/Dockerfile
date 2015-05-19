@@ -1,4 +1,4 @@
-FROM emanueleperuffo/postgres
+FROM emanueleperuffo/baseimage-debian
 MAINTAINER Emanuele Peruffo <info@emanueleperuffo.com>
 
 ENV HOME /root
