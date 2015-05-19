@@ -8,7 +8,7 @@ chown -R postgres "${PGDATA}"
 if [ -z "$(ls -A "${PGDATA}")" ]; then
 	gosu postgres initdb
 
-	if [ "$POSTGRES_PASSWORD" -ne "" ]; then
+	if [ $POSTGRES_PASSWORD ]; then
 		pass="PASSWORD '$POSTGRES_PASSWORD'"
 		authMethod=md5
 	else
@@ -51,7 +51,7 @@ if [ -z "$(ls -A "${PGDATA}")" ]; then
 		log_rotation_size = 10MB
 	EOCONF
 
-	gosu postgres mkdir -m 700 "${PGDATA}/postgresql.conf"
+	gosu postgres mkdir -m 700 "${PGDATA}/pg_log"
 fi
 
 exec gosu postgres postgres -e -i
