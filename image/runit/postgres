@@ -50,16 +50,6 @@ if [ -z "$(ls -A "/var/lib/postgresql/data")" ]; then
 	EOCONF
 
 	gosu postgres mkdir -m 700 /var/lib/postgresql/data/pg_log
-
-	if [ "${SYSLOG_SERVER}" == "" ]; then
-		if [ -f /etc/syslog-ng/conf.d/20-postgres-remote.conf ]; then
-			mv /etc/syslog-ng/conf.d/20-postgres-remote.conf /etc/syslog-ng/conf.d/20-postgres-remote.conf.off
-		fi
-	else
-		if [ -f /etc/syslog-ng/conf.d/20-postgres-remote.conf.off ]; then
-			mv /etc/syslog-ng/conf.d/20-postgres-remote.conf.off /etc/syslog-ng/conf.d/20-postgres-remote.conf
-		fi
-	fi
 fi
 
 exec gosu postgres postgres -e -i -D /var/lib/postgresql/data
