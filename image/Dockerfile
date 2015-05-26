@@ -1,10 +1,9 @@
-FROM emanueleperuffo/baseimage-debian
+FROM emanueleperuffo/baseimage-debian:latest
 MAINTAINER Emanuele Peruffo <info@emanueleperuffo.com>
 
 ENV HOME /root
 ADD . /build
 
-ENV PG_MAJOR 9.4
 ENV PGDATA /var/lib/postgresql/data
 
 RUN /build/prepare.sh && \
