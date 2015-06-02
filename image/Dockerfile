@@ -5,6 +5,7 @@ ENV HOME /root
 ADD . /build
 
 ENV PGDATA /var/lib/postgresql/data
+ENV POSTGRES_VERSION 9.4
 
 RUN /build/prepare.sh && \
 	/build/services.sh && \
