@@ -10,35 +10,12 @@ BOOTSTRAPPED="$PGDATA/.bootstrapped"
 if [ ! -e $BOOTSTRAPPED ]; then
 	gosu postgres initdb
 
-	if [ $POSTGRES_PASSWORD ]; then
-		pass="PASSWORD '$POSTGRES_PASSWORD'"
-		authMethod=md5
-	else
-		# The - option suppresses leading tabs but *not* spaces. :)
-		cat >&2 <<-'EOWARN'
-		****************************************************
-		WARNING: No password has been set for the database.
-		This will allow anyone with access to the
-		Postgres port to access your database. In
-		Docker's default configuration, this is
-		effectively any other container on the same
-		system.
-
-		Use "-e POSTGRES_PASSWORD=password" to set
-		it in "docker run".
-		****************************************************
-		EOWARN
-
-		pass=
-		authMethod=trust
-	fi
-
 	gosu postgres postgres --single -jE <<-EOSQL
-		ALTER USER postgres WITH SUPERUSER $pass ;
+		ALTER USER postgres WITH SUPERUSER PASSWORD '$POSTGRES_PASSWORD';
 	EOSQL
 	echo
 
-	{ echo; echo "host all all 0.0.0.0/0 $authMethod"; } >> "$PGDATA/pg_hba.conf"
+	{ echo; echo "host all all 0.0.0.0/0 md5"; } >> "$PGDATA/pg_hba.conf"
 
 	cat <<-EOCONF >> "$PGDATA/postgresql.conf"
 		log_destination = 'stderr, syslog'

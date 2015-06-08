@@ -6,6 +6,7 @@ ADD . /build
 
 ENV PGDATA /var/lib/postgresql/data
 ENV POSTGRES_VERSION 9.4
+ENV POSTGRES_PASSWORD pass
 
 RUN /build/prepare.sh && \
 	/build/services.sh && \
